@@ -1,4 +1,14 @@
 const mongoose = require('mongoose');
+const commentSchema = new mongoose.Schema({
+    text:{
+        type: String, 
+        required: true
+    }, 
+    author:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
+}, {timestamps:true})
 
 const hootSchema = new mongoose.Schema({
         title: {
@@ -15,11 +25,11 @@ const hootSchema = new mongoose.Schema({
             enum: ['News', 'Sports', 'Games', 'Movies', 'Music', 'Television'],
         }, 
         author:{
-            type: mongoose.Schema.Types.ObkectId, 
+            type: mongoose.Schema.Types.ObjectId, 
             ref: 'User'//teh ref property allows us to use .populate
             },
+            comments:[commentSchema]//embedded comment Schema
     }, { timestamps: true});
 
     const Hoot = mongoose.model('Hoot', hootSchema);
-
-    module.export = Hoot;
+    module.exports = Hoot;
